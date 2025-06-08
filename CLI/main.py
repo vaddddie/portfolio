@@ -1,3 +1,8 @@
+import sys
+import os
+
+sys.path.append(os.path.abspath('../app'))
+
 from app.db.controller import create_project
 
 
@@ -20,7 +25,7 @@ def main():
             for i in range(4): 
                 print(f'Enter the image url[{1}] (or None)')
                 tmp_img_url = input()
-                if tmp_img_url is not 'None':
+                if tmp_img_url != 'None':
                     img_urls.append(input())
 
             print(f'Enter the title of project')

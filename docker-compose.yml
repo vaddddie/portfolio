@@ -2,13 +2,12 @@ version: '3.8'
 
 services:
   app:
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.9
     container_name: fastapi-app
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:80"
+      - "80:8000"
     volumes:
       - .:/app
     environment:

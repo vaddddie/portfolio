@@ -9,4 +9,7 @@ def create_tables():
 
     if not tables:
         Base.metadata.create_all(engine)
+        
+def create_project():
+    pass
     

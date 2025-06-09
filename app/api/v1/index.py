@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from starlette.templating import Jinja2Templates
 from starlette.requests import Request
 
+
 router = APIRouter(prefix="")
 
 templates = Jinja2Templates(directory="app/templates")

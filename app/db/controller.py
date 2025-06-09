@@ -1,6 +1,7 @@
 from sqlalchemy import func, inspect
 from app.db.engine import engine, Base, Session
 from app.models.project import Project
+from app.models.user import User
 
 
 def create_tables():
@@ -10,6 +11,38 @@ def create_tables():
     if not tables:
         Base.metadata.create_all(engine)
         
-def create_project():
-    pass
+        
+def auth(username, password):
+    with Session() as session:
+        if session.query(User).exists():
+            user = session.query(User).filter(User.username == username).first()
+            if hash(password) == user.password: 
+                return True
+        else:
+            new_user = User(username, hash(password))
+            session.add(new_user)
+            session.commit()
+            return True
+        return False
+        
+
+def get_all_projects():
+    with Session() as session:
+        return session.query(Project).all()
+    
+    
+def create_project(images, title, client, category, date, project_url, subtitle, description):
+    with Session() as session:
+        new_project = Project(
+            images=images,
+            title=title,
+            client=client,
+            category=category,
+            date=date,
+            project_url=project_url,
+            subtitle=subtitle,
+            description=description
+        )
+        session.add(new_project)
+        session.commit()
     

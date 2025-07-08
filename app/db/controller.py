@@ -22,7 +22,7 @@ def auth(username, password):
                 return True
         else:
             print("new user creating")
-            new_user = User(username, hash(password))
+            new_user = User(username=username, password=hash(password))
             session.add(new_user)
             session.commit()
             return True

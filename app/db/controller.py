@@ -14,7 +14,7 @@ def create_tables():
         
 def auth(username, password):
     with Session() as session:
-        if session.query(User).exists():
+        if session.query(User).exists() is not None:
             print("user exists")
             user = session.query(User).filter(User.username == username).first()
             if hash(password) == user.password:

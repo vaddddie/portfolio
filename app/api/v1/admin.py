@@ -18,7 +18,7 @@ async def login(request: Request):
 
 @router.post("/login")
 async def authentication(username = Form(), password = Form()):
-    if await auth(username, password):
+    if auth(username, password):
         token = security.create_access_token(uid="1")
         response = RedirectResponse("/admin-panel", 302)
         response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)

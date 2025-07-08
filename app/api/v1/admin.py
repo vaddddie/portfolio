@@ -16,14 +16,14 @@ templates = Jinja2Templates(directory="app/templates")
 async def login(request: Request):
     return templates.TemplateResponse(request, "login.html")
 
-@router.post("/login", response_class=RedirectResponse)
-async def auth(username = Form(), password = Form()):
-    if auth(username, password):
+@router.post("/login")
+async def authentication(username = Form(), password = Form()):
+    if await auth(username, password):
         token = security.create_access_token(uid="1")
         response = RedirectResponse("/admin-panel", 302)
         response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)
         return response
-    raise HTTPException(status_code=400, detail="Incorrect username or password")
+    return HTTPException(status_code=400, detail="Incorrect username or password")
 
 @router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.access_token_required)])
 async def admin_panel(request: Request):

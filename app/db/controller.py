@@ -15,10 +15,13 @@ def create_tables():
 def auth(username, password):
     with Session() as session:
         if session.query(User).exists():
+            print("user exists")
             user = session.query(User).filter(User.username == username).first()
-            if hash(password) == user.password: 
+            if hash(password) == user.password:
+                print("password correct!")
                 return True
         else:
+            print("new user creating")
             new_user = User(username, hash(password))
             session.add(new_user)
             session.commit()

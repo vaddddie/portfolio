@@ -25,9 +25,9 @@ async def authentication(username = Form(), password = Form()):
         return response
     return HTTPException(status_code=400, detail="Incorrect username or password")
 
-@router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.access_token_required)])
-async def admin_panel(request: Request):
-    print(Depends(security.access_token_required))
+@router.get("/admin-panel", response_class=HTMLResponse)
+async def admin_panel(request: Request, token=Depends(security.access_token_required)):
+    print(token)
     context = {
         "projects": [prj.to_dict() for prj in get_all_projects()]
     }

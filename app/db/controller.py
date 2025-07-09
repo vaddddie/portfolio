@@ -13,35 +13,25 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
-
 def create_tables():
     inspector = inspect(engine)
     tables = inspector.get_table_names()
 
     if not tables:
-        Base.metadata.create_all(engine)
-        with Session() as session:
-            new_user = User(username='admin', password=hash_password('admin'))
-            session.add(new_user)
-            session.commit()
-        
+        Base.metadata.create_all(engine)  
         
 def auth(username, password):
     with Session() as session:
         if session.query(User).first() is not None:
-            print("user exists")
             user = session.query(User).filter(User.username == username).first()
             if verify_password(password, user.password):
-                print("password correct!")
                 return True
+        else:
+            new_user = User(username=username, password=hash_password(password))
+            session.add(new_user)
+            session.commit()
+            return True
         return False
-
-
-# DEBUG
-def get_all_users():
-    with Session() as session:
-        return session.query(User).all()
-# DEBUG
 
 def get_all_projects():
     with Session() as session:

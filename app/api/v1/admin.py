@@ -5,7 +5,7 @@ from starlette.requests import Request
 from typing import List
 
 from app.auth import auth_config, security
-from app.db.controller import auth, get_all_projects, create_project, get_all_users
+from app.db.controller import auth, get_all_projects, create_project
 
 
 router = APIRouter(prefix="")
@@ -14,9 +14,7 @@ templates = Jinja2Templates(directory="app/templates")
 
 @router.get("/login", response_class=HTMLResponse)
 async def login(request: Request):
-    all_users = get_all_users()
-    context = {'users': all_users}
-    return templates.TemplateResponse(request, "login.html", context)
+    return templates.TemplateResponse(request, "login.html")
 
 @router.post("/login")
 async def authentication(username = Form(), password = Form()):
@@ -29,6 +27,7 @@ async def authentication(username = Form(), password = Form()):
 
 @router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.access_token_required)])
 async def admin_panel(request: Request):
+    print(Depends(security.access_token_required))
     context = {
         "projects": [prj.to_dict() for prj in get_all_projects()]
     }

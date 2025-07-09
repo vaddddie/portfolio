@@ -10,6 +10,10 @@ def create_tables():
 
     if not tables:
         Base.metadata.create_all(engine)
+        with Session() as session:
+            new_user = User(username='admin', password=hash('admin'))
+            session.add(new_user)
+            session.commit()
         
         
 def auth(username, password):
@@ -20,12 +24,6 @@ def auth(username, password):
             if hash(password) == user.password:
                 print("password correct!")
                 return True
-        else:
-            print("new user creating")
-            new_user = User(username=username, password=hash(password))
-            session.add(new_user)
-            session.commit()
-            return True
         return False
 
 

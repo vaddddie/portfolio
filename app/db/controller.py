@@ -27,7 +27,13 @@ def auth(username, password):
             session.commit()
             return True
         return False
-        
+
+
+# DEBUG
+def get_all_users():
+    with Session() as session:
+        return session.query(User).all()
+# DEBUG
 
 def get_all_projects():
     with Session() as session:

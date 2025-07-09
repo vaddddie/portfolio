@@ -1,7 +1,17 @@
+from passlib.context import CryptContext
 from sqlalchemy import func, inspect
 from app.db.engine import engine, Base, Session
 from app.models.project import Project
 from app.models.user import User
+
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
 
 
 def create_tables():
@@ -11,7 +21,7 @@ def create_tables():
     if not tables:
         Base.metadata.create_all(engine)
         with Session() as session:
-            new_user = User(username='admin', password=hash('admin'))
+            new_user = User(username='admin', password=hash_password('admin'))
             session.add(new_user)
             session.commit()
         
@@ -21,7 +31,7 @@ def auth(username, password):
         if session.query(User).first() is not None:
             print("user exists")
             user = session.query(User).filter(User.username == username).first()
-            if hash(password) == user.password:
+            if verify_password(password, user.password):
                 print("password correct!")
                 return True
         return False

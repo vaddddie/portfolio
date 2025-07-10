@@ -29,7 +29,9 @@ async def authentication(username = Form(), password = Form()):
 @router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.get_token_from_request)])
 async def admin_panel(request: Request, token: RequestToken = Depends()):
     try:
+        print('1 step')
         security.verify_token(token=token)
+        print('2 step')
         context = {
             "projects": [prj.to_dict() for prj in get_all_projects()]
         }

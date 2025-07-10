@@ -29,15 +29,12 @@ async def authentication(username = Form(), password = Form()):
 @router.get("/admin-panel", response_class=HTMLResponse)
 async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request)):
     try:
-        print('1 step')
-        security.verify_token(token=token)
-        print('2 step')
+        # security.verify_token(token=token)
         context = {
             "projects": [prj.to_dict() for prj in get_all_projects()]
         }
         return templates.TemplateResponse(request, "admin-panel.html", context)
     except Exception as e:
-        print("error!!!")
         raise HTTPException(401, detail={"message": str(e)}) from e
 
 @router.get("/projects/create", response_class=HTMLResponse, dependencies=[Depends(security.access_token_required)])

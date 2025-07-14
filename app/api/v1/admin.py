@@ -21,6 +21,7 @@ async def login(request: Request):
 async def authentication(username = Form(), password = Form()):
     if auth(username, password):
         token = security.create_access_token(uid="1")
+        token.csrf = "123"
         response = RedirectResponse("/admin-panel", 302)
         response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)
         return response

@@ -21,15 +21,17 @@ async def login(request: Request):
 async def authentication(username = Form(), password = Form()):
     if auth(username, password):
         token = security.create_access_token(uid="1")
+        csrf_token = security.create_csrf_token()
         response = RedirectResponse("/admin-panel", 302)
         response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)
+        response.headers["X-CSRF-TOKEN"] = csrf_token
         return response
     return HTTPException(status_code=400, detail="Incorrect username or password")
 
 @router.get("/admin-panel", response_class=HTMLResponse)
-async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request)):
+async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request())):
     try:
-        _ = security.verify_token(token)
+        security.verify_token(token)
         context = {
             "projects": [prj.to_dict() for prj in get_all_projects()]
         }

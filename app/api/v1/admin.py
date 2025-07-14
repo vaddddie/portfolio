@@ -22,13 +22,13 @@ async def authentication(username = Form(), password = Form()):
     if auth(username, password):
         token = security.create_access_token(uid="1")
         response = RedirectResponse("/admin-panel", 302)
-        security.set_access_cookies(response, token)
-        # response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)
+        # security.set_access_cookies(response, token)
+        response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)
         return response
     return HTTPException(status_code=400, detail="Incorrect username or password")
 
 @router.get("/admin-panel", response_class=HTMLResponse)
-async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request())):
+async def admin_panel(request: Request, token: RequestToken = Depends(security.no_csrf_required())):
     try:
         security.verify_token(token)
         context = {

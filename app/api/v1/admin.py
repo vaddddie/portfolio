@@ -28,7 +28,7 @@ async def authentication(username = Form(), password = Form()):
     return HTTPException(status_code=400, detail="Incorrect username or password")
 
 @router.get("/admin-panel", response_class=HTMLResponse)
-async def admin_panel(request: Request, token: RequestToken = Depends(security.no_csrf_required())):
+async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request(csrf_protect=False))):
     try:
         security.verify_token(token)
         context = {

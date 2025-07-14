@@ -24,6 +24,7 @@ async def authentication(username = Form(), password = Form()):
         csrf_token = security.create_csrf_token()
         response = RedirectResponse("/admin-panel", 302)
         response.set_cookie(auth_config.JWT_ACCESS_COOKIE_NAME, token)
+        security.set_access_cookie(response, token)
         response.headers["X-CSRF-TOKEN"] = csrf_token
         return response
     return HTTPException(status_code=400, detail="Incorrect username or password")

@@ -5,14 +5,17 @@ from starlette.templating import Jinja2Templates
 from starlette.requests import Request
 from typing import List
 
-from app.auth import auth_config, security
-from app.db.controller import auth, get_all_projects, create_project
+# from app.auth import auth_config, security
+# from app.db.controller import auth, get_all_projects, create_project
 
 
 router = APIRouter(prefix="")
 
 templates = Jinja2Templates(directory="app/templates")
 
+
+
+"""
 @router.get("/login", response_class=HTMLResponse)
 async def login(request: Request):
     return templates.TemplateResponse(request, "login.html")
@@ -56,4 +59,4 @@ async def create_project(
     await create_project(images, title, client, category, date, project_url, subtitle, description)
     return RedirectResponse("/admin-panel", 302)
 
-
+"""

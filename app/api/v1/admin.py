@@ -14,6 +14,7 @@ router = APIRouter(prefix="")
 
 templates = Jinja2Templates(directory="app/templates")
 
+get_token_dep = security.get_token_from_request(type="access", optional=False)
 
 @router.get("/login", response_class=HTMLResponse)
 async def login(request: Request):
@@ -32,9 +33,9 @@ async def authentication(request: Request):
         return response
     return HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Incorrect username or password")
 
-@router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.get_token_from_request)])
+@router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.access_token_required)])
 # async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request(csrf_protect=False))):
-async def admin_panel(request: Request, token: RequestToken = Depends()):
+async def admin_panel(request: Request, token: RequestToken = Depends(get_token_dep)):
     try:
         security.verify_token(token=token)
         context = {

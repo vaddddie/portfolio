@@ -33,11 +33,6 @@ class AdminAuth(AuthenticationBackend):
     async def authenticate(self, request: Request) -> bool:
         return bool(request.session.get("admin"))
 
-auth_backend = AdminAuth(secret_key="very-secret-key")
-
-# --- инициализация админки (передаём engine или session_maker) ---
-admin = Admin(app=app, engine=engine, session_maker=Session,
-              authentication_backend=auth_backend, base_url="/admin")
 class UserAdmin(ModelView, model=User):
     column_list = [User.id, User.email, User.full_name, User.is_active]
     column_searchable_list = [User.email, User.full_name]
@@ -45,4 +40,10 @@ class UserAdmin(ModelView, model=User):
     can_edit = True
     can_delete = True
 
-admin.add_view(UserAdmin)
+
+def admin_init():
+    # --- инициализация админки (передаём engine или session_maker) ---
+    auth_backend = AdminAuth(secret_key="very-secret-key")
+    admin = Admin(app=app, engine=engine, session_maker=Session,
+                  authentication_backend=auth_backend, base_url="/admin")
+    admin.add_view(UserAdmin)

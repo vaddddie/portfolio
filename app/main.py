@@ -4,6 +4,7 @@ from starlette.staticfiles import StaticFiles
 
 from app.api.v1 import index
 # from app.api.v1 import admin
+from app.adminPanel import admin_init
 from app.db.controller import create_tables
 
 
@@ -14,5 +15,7 @@ app.add_middleware(SessionMiddleware, secret_key="change-me-to-secure")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.include_router(index.router)
 # app.include_router(admin.router)
+
+admin_init()
 
 

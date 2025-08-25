@@ -32,7 +32,7 @@ async def authentication(request: Request):
         return response
     return HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Incorrect username or password")
 
-@router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(auth.get_token_from_request)])
+@router.get("/admin-panel", response_class=HTMLResponse, dependencies=[Depends(security.get_token_from_request)])
 # async def admin_panel(request: Request, token: RequestToken = Depends(security.get_token_from_request(csrf_protect=False))):
 async def admin_panel(request: Request, token: RequestToken = Depends()):
     try:

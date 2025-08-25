@@ -40,7 +40,7 @@ async def admin_panel(request: Request, token: RequestToken = Depends()):
         context = {
             "projects": [prj.to_dict() for prj in get_all_projects()]
         }
-        return templates.TemplateResponse(request, "admin-panel.html", context)
+        return templates.TemplateResponse(request=request, name="admin-panel.html", context=context)
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
     

@@ -11,7 +11,7 @@ from app.db.controller import create_tables
 create_tables()
 
 app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key="change-me-to-secure")
+app.add_middleware(SessionMiddleware, secret_key="very-secret-key")
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 app.include_router(index.router)
 # app.include_router(admin.router)

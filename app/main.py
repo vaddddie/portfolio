@@ -14,7 +14,7 @@ from app.db.engine import Session
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     admin_init()
-    async with Session.begin() as conn:
+    with Session.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
     yield
 

@@ -8,14 +8,13 @@ from app.api.v1 import index
 # from app.api.v1 import admin
 from app.adminPanel import admin_init
 from app.db.controller import create_tables
-from app.db.engine import Session
+from app.db.engine import engine
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     admin_init()
-    with Session.begin() as conn:
-        await conn.run_sync(SQLModel.metadata.create_all)
+    SQLModel.metadata.create_all(engine)
     yield
 
 

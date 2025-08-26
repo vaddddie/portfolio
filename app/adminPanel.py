@@ -4,6 +4,8 @@ from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 
 class User(SQLModel, table=True):
+    __tablename__ = "users"
+    
     id: int | None = Field(default=None, primary_key=True)
     email: str
     full_name: str | None = None

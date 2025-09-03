@@ -1,17 +1,10 @@
-from sqlalchemy import Column, Integer, String
-from app.db.engine import Base
+from sqlmodel import SQLModel, Field
 
-class User(Base):
-    __tablename__ = 'projects'
-    __table_args__ = {'extend_existing': True}
+class User(SQLModel, table=True):
+    __tablename__ = "Users"
 
-    id = Column(Integer, primary_key=True)
-    username = Column(String)
-    password = Column(String)
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'username': self.username,
-            'password': self.password
-        }
+    id: int | None = Field(default=None, primary_key=True)
+    email: str
+    password: str
+    full_name: str | None = None
+    is_active: bool = True

@@ -3,8 +3,9 @@ from sqlalchemy import func, inspect
 from app.db.engine import engine, Base, Session
 from app.models.project import Project
 from app.models.user import User
+from sqlmodel import SQLModel
 
-
+"""
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password: str) -> str:
@@ -12,14 +13,7 @@ def hash_password(password: str) -> str:
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
-
-def create_tables():
-    inspector = inspect(engine)
-    tables = inspector.get_table_names()
-
-    if not tables:
-        Base.metadata.create_all(engine)  
-        
+    
 def auth(username, password):
     with Session() as session:
         if session.query(User).first() is not None:
@@ -32,12 +26,21 @@ def auth(username, password):
             session.commit()
             return True
         return False
+"""
+
+
+def create_tables():
+    inspector = inspect(engine)
+    tables = inspector.get_table_names()
+
+    if not tables:
+        SQLModel.metadata.create_all(engine)  
 
 def get_all_projects():
     with Session() as session:
         return session.query(Project).all()
     
-    
+"""
 def create_project(images, title, client, category, date, project_url, subtitle, description):
     with Session() as session:
         new_project = Project(
@@ -52,4 +55,4 @@ def create_project(images, title, client, category, date, project_url, subtitle,
         )
         session.add(new_project)
         session.commit()
-    
+"""

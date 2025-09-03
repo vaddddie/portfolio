@@ -1,25 +1,26 @@
-from sqlalchemy import Column, Integer, String, Date
+from sqlalchemy import Column, String
 from sqlalchemy.dialects.postgresql import ARRAY
-from app.db.engine import Base
+from sqlmodel import SQLModel, Field
+import datetime
 
-class Project(Base):
-    __tablename__ = 'projects'
-    __table_args__ = {'extend_existing': True}
+class Project(SQLModel, table=True):
+    __tablename__ = "Projects"
 
-    id = Column(Integer, primary_key=True)
-    images = Column(ARRAY(String))
-    title = Column(String)
-    client = Column(String)
-    category = Column(String)
-    date = Column(Date)
-    project_url = Column(String)
-    subtitle =  Column(String)
-    description = Column(String)
+    id: int | None = Field(default=None, primary_key=True)
+    image_urls: list[str] = Field(default_factory=list, sa_column=Field(sa_column=Column(ARRAY(String)))) # Только для Postgres
+    title: str
+    client: str
+    category: str
+    date: datetime.date
+    project_url: str
+    subtitle: str
+    description: str
+    author_id: int = Field(foreign_key="users.id")
 
     def to_dict(self):
         return {
             'id': self.id,
-            'images': self.images,
+            'images': self.image_urls,
             'title': self.title,
             'client': self.client,
             'category': self.category,

@@ -1,7 +1,7 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
 
-from project import Project
+from app.models.project import Project
 
 class ProjectImage(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)

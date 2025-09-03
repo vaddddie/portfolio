@@ -15,7 +15,18 @@ class UserAdmin(ModelView, model=User):
     can_delete = True
 
 class ProjectAdmin(ModelView, model=Project):
-    column_list = [Project.id, Project.title, Project.content, Project.author_id]
+    column_list = [
+        Project.id,
+        Project.images,
+        Project.title,
+        Project.client,
+        Project.category,
+        Project.date,
+        Project.project_url,
+        Project.subtitle,
+        Project.description,
+        Project.author_id
+    ]
     column_searchable_list = [Project.title, Project.content]
     can_create = True
     can_edit = True

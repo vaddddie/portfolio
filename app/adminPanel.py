@@ -27,7 +27,7 @@ class ProjectAdmin(ModelView, model=Project):
         Project.description,
         Project.author_id
     ]
-    column_searchable_list = [Project.title, Project.content]
+    column_searchable_list = [Project.title, Project.category]
     can_create = True
     can_edit = True
     can_delete = True

@@ -40,4 +40,4 @@ class ProjectImage(SQLModel, table=True):
     project: Optional[Project] = Relationship(back_populates="images")
     
     def to_img_url(self):
-        return self.image
+        return self.image.replace("app/", "", 1)

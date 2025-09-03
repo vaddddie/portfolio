@@ -30,6 +30,7 @@ def auth(username, password):
 
 
 def create_tables():
+    SQLModel.metadata.drop_all(engine)
     inspector = inspect(engine)
     tables = inspector.get_table_names()
 

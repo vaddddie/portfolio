@@ -32,7 +32,7 @@ class Project(SQLModel, table=True):
 
 class ProjectImage(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    project_id: int = Field(foreign_key="project.id")
+    project_id: int = Field(foreign_key="projects.id")
     image_url: str
 
     project: Optional[Project] = Relationship(back_populates="images")

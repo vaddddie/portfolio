@@ -1,13 +1,12 @@
-from sqlalchemy import Column, String
-from sqlalchemy.dialects.postgresql import ARRAY
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 import datetime
+from typing import List
 
 class Project(SQLModel, table=True):
     __tablename__ = "Projects"
 
     id: int | None = Field(default=None, primary_key=True)
-    image_urls: list[str] = Field(default_factory=list, sa_column=Field(sa_column=Column(ARRAY(String)))) # Только для Postgres
+    images: List["ProjectImage"] = Relationship(back_populates="project")
     title: str
     client: str
     category: str
@@ -20,7 +19,7 @@ class Project(SQLModel, table=True):
     def to_dict(self):
         return {
             'id': self.id,
-            'images': self.image_urls,
+            'images': self.images,
             'title': self.title,
             'client': self.client,
             'category': self.category,

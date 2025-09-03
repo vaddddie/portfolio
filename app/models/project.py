@@ -2,6 +2,9 @@ from sqlmodel import SQLModel, Field, Relationship
 import datetime
 from typing import List
 
+from app.models.project_image import ProjectImage
+
+
 class Project(SQLModel, table=True):
     __tablename__ = "Projects"
 

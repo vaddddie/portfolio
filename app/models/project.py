@@ -35,6 +35,6 @@ class Project(SQLModel, table=True):
 class ProjectImage(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     project_id: int = Field(foreign_key="projects.id")
-    image: str | None = Field(sa_column=Column(ImageType(storage=FileSystemStorage(path=f"static/img/projects/"))))
+    image: str | None = Field(sa_column=Column(ImageType(storage=FileSystemStorage(path=f"app/static/img/projects/"))))
 
     project: Optional[Project] = Relationship(back_populates="images")

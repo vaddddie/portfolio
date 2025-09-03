@@ -38,21 +38,6 @@ def create_tables():
 
 def get_all_projects():
     with Session() as session:
+        print(session.query(Project).all())
         return session.query(Project).all()
     
-"""
-def create_project(images, title, client, category, date, project_url, subtitle, description):
-    with Session() as session:
-        new_project = Project(
-            images=images,
-            title=title,
-            client=client,
-            category=category,
-            date=date,
-            project_url=project_url,
-            subtitle=subtitle,
-            description=description
-        )
-        session.add(new_project)
-        session.commit()
-"""

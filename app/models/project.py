@@ -15,7 +15,6 @@ class Project(SQLModel, table=True):
     project_url: str
     subtitle: str
     description: str
-    author_id: int = Field(foreign_key="users.id")
 
     def to_dict(self):
         return {

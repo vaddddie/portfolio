@@ -4,7 +4,7 @@ from typing import List, Optional
 
 
 class Project(SQLModel, table=True):
-    __tablename__ = "Projects"
+    __tablename__ = "projects"
 
     id: int | None = Field(default=None, primary_key=True)
     images: List["ProjectImage"] = Relationship(back_populates="project")
@@ -32,7 +32,7 @@ class Project(SQLModel, table=True):
 
 class ProjectImage(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    project_id: int = Field(foreign_key="Projects.id")
+    project_id: int = Field(foreign_key="projects.id")
     image_url: str
 
     project: Optional[Project] = Relationship(back_populates="images")

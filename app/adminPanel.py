@@ -1,4 +1,3 @@
-from sqlmodel import SQLModel, Field
 from sqladmin import Admin, ModelView
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request

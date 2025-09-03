@@ -5,6 +5,7 @@ from typing import List, Optional
 from fastapi_storages import FileSystemStorage
 from fastapi_storages.integrations.sqlalchemy import ImageType
 
+
 class Project(SQLModel, table=True):
     __tablename__ = "projects"
 
@@ -34,6 +35,6 @@ class Project(SQLModel, table=True):
 class ProjectImage(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     project_id: int = Field(foreign_key="projects.id")
-    image: str | None = Field(sa_column=Column(ImageType(storage=FileSystemStorage(path=f"/static/img/projects/{project_id}/"))))
+    image: str | None = Field(sa_column=Column(ImageType(storage=FileSystemStorage(path=f"static/img/projects/"))))
 
     project: Optional[Project] = Relationship(back_populates="images")

@@ -31,7 +31,7 @@ class ProjectAdmin(ModelView, model=Project):
     can_delete = True
 
 class ProjectImageAdmin(ModelView, model=ProjectImage):
-    column_list = [ProjectImage.id, ProjectImage.project_id, ProjectImage.image_url]
+    column_list = [ProjectImage.id, ProjectImage.project_id, ProjectImage.image]
     column_searchable_list = [ProjectImage.project_id]
     can_create = True
     can_edit = True

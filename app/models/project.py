@@ -22,7 +22,7 @@ class Project(SQLModel, table=True):
     def to_dict(self):
         return {
             'id': self.id,
-            'images': self.images,
+            'images': [image_url.to_img_url() for image_url in self.images],
             'title': self.title,
             'client': self.client,
             'category': self.category,
@@ -38,3 +38,6 @@ class ProjectImage(SQLModel, table=True):
     image: str | None = Field(sa_column=Column(ImageType(storage=FileSystemStorage(path=f"app/static/img/projects/"))))
 
     project: Optional[Project] = Relationship(back_populates="images")
+    
+    def to_img_url(self):
+        return self.image

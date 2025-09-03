@@ -38,5 +38,6 @@ def create_tables():
 
 def get_all_projects():
     with Session() as session:
+        print(project.to_dict() for project in session.query(Project).all())
         return [project.to_dict() for project in session.query(Project).all()]
     

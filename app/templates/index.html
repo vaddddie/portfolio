@@ -357,11 +357,11 @@
             {% for project in projects %}
               <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
                 <div class="portfolio-content h-100">
-                  <img src="{{ project.image }}" class="img-fluid" alt="">
+                  <img src="{{ project.images }}" class="img-fluid" alt="">
                   <div class="portfolio-info">
                     <h4>{{ project.title }}</h4>
                     <p>{{ project.subtitle }}</p>
-                    <a href="{{ project.image }}" title="{{ project.title }}" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                    <a href="{{ project.images }}" title="{{ project.title }}" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                     <a href="/projects/{{ project.id }}" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
                   </div>
                 </div>

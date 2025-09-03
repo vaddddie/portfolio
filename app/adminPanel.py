@@ -3,7 +3,7 @@ from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 
 from app.models.user import User
-from app.models.project import Project
+from app.models.project import Project, ProjectImage
 
 
 class UserAdmin(ModelView, model=User):
@@ -27,6 +27,13 @@ class ProjectAdmin(ModelView, model=Project):
         Project.author_id
     ]
     column_searchable_list = [Project.title, Project.category]
+    can_create = True
+    can_edit = True
+    can_delete = True
+
+class ProjectImageAdmin(ModelView, model=User):
+    column_list = [ProjectImage.id, ProjectImage.project_id, ProjectImage.image_url]
+    column_searchable_list = [ProjectImage.project_id]
     can_create = True
     can_edit = True
     can_delete = True
@@ -62,3 +69,4 @@ def admin_init(app, engine, Session):
                   authentication_backend=auth_backend, base_url="/admin")
     admin.add_view(UserAdmin)
     admin.add_view(ProjectAdmin)
+    admin.add_view(ProjectImageAdmin)

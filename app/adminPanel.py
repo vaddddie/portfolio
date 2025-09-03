@@ -11,6 +11,14 @@ class User(SQLModel, table=True):
     full_name: str | None = None
     is_active: bool = True
 
+class Post(SQLModel, table=True):
+    __tablename__ = "posts"
+
+    id: int | None = Field(default=None, primary_key=True)
+    title: str
+    content: str
+    author_id: int = Field(foreign_key="users.id")
+
 class AdminAuth(AuthenticationBackend):
     def __init__(self, secret_key: str):
         super().__init__(secret_key=secret_key)
@@ -39,6 +47,12 @@ class UserAdmin(ModelView, model=User):
     can_edit = True
     can_delete = True
 
+class PostAdmin(ModelView, model=Post):
+    column_list = [Post.id, Post.title, Post.content, Post.author_id]
+    column_searchable_list = [Post.title, Post.content]
+    can_create = True
+    can_edit = True
+    can_delete = True
 
 def admin_init():
     from app.main import app
@@ -49,3 +63,4 @@ def admin_init():
     admin = Admin(app=app, engine=engine, session_maker=Session,
                   authentication_backend=auth_backend, base_url="/admin")
     admin.add_view(UserAdmin)
+    admin.add_view(PostAdmin)

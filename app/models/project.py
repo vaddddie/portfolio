@@ -1,8 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 import datetime
-from typing import List
-
-from app.models.project_image import ProjectImage
+from typing import List, Optional
 
 
 class Project(SQLModel, table=True):
@@ -31,3 +29,10 @@ class Project(SQLModel, table=True):
             'subtitle':  self.subtitle,
             'description': self.description
         }
+
+class ProjectImage(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    project_id: int = Field(foreign_key="project.id")
+    image_url: str
+
+    project: Optional[Project] = Relationship(back_populates="images")

@@ -61,7 +61,6 @@ class AdminAuth(AuthenticationBackend):
 def admin_init(app, engine, Session):
     # from app.main import app
     # from app.db.engine import engine, Session
-    
     # --- инициализация админки (передаём engine или session_maker) ---
     auth_backend = AdminAuth(secret_key="very-secret-key")
     admin = Admin(app=app, engine=engine, session_maker=Session,
